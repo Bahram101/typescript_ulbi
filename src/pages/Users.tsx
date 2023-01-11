@@ -1,0 +1,32 @@
+import { FC, useState, useEffect } from "react";
+import { IUser } from "../types/types";
+import axios from "axios";
+import List from "../components/List";
+import UserItem from "../components/UserItem";
+
+const User: FC = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  async function getUsers() {
+    try {
+      const res = await axios.get<IUser[]>(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setUsers(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  return (
+    <List
+      items={users}
+      renderItem={(user: IUser) => <UserItem user={user} key={user.id} />}
+    />
+  );
+};
+
+export default User;

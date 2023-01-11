@@ -1,18 +1,22 @@
-import Card, { CardVariant } from "./components/Card";
+import { Route, Routes } from "react-router-dom";
+import { Layout } from "./components/Layout";
+import Home from "./pages/Home";
+import Todos from "./pages/Todos";
+import User from "./pages/Users";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Card
-        width="200px"
-        height="200px"
-        variant={CardVariant.outlined}
-        onClick={(num) => console.log("clicked", num)}
-      >
-        <button>Кнопка</button>
-      </Card>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/todos" element={<Todos />} />
+          <Route path="/users" element={<User />} />
+          <Route path="/users/:id" element={<User />} />
+        </Route>
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
